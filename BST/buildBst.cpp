@@ -53,6 +53,52 @@ bool search(Node* root, int key){
         return search(root->right, key);
     }
 }
+
+Node* findMin(Node* root){
+    while(root->left != nullptr){
+        root = root->left;
+    }
+    return root;
+}
+
+Node* dltNode(Node* root , int key){
+    if(root==nullptr){
+        return nullptr;
+    }
+
+    if(key < root->data){
+        root->left = dltNode(root->left, key);
+    }
+    else if(key > root->data){
+        root->right = dltNode(root->right, key);
+    }
+    else{
+        // case 1 : no child
+        if(root->left == nullptr && root->right == nullptr){
+            delete root;
+            return nullptr;
+        }
+        // case 2 : one child
+        else if(root->left == nullptr){
+            Node* temp = root->right;
+            delete root;
+            return temp;
+        }
+        else if(root->right == nullptr){
+            Node* temp = root->left;
+            delete root;
+            return temp;
+        }
+        // case 3 : two child
+        else{
+            Node* temp = findMin(root->right);
+            root->data = temp->data;
+            root->right = dltNode(root->right, temp->data);
+        }
+    }
+    return root;
+}
+
 int main(){
     vector<int> v = {3,2,1,5,4};
     Node* root = buildBst(v);
