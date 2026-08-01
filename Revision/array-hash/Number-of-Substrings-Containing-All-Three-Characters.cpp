@@ -3,7 +3,7 @@
 using namespace std;
 
 class Solution{
-
+//Approach- Optimised Brute Force
 public:
     int countOfSubstring(string s){
         int n=s.size();
